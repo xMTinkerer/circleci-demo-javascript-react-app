@@ -1,20 +1,17 @@
-orbs:
-  node: circleci/node@2.0.2
-
 version: 2.1
-
+orbs:
+  node: circleci/node@1.1.6
+jobs:
+  build-and-test:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - node/with-cache:
+          steps:
+            - run: npm install
+            - run: npm test
 workflows:
-  jobs:
-   build:
-      docker: 
-         - image: circleci/node:4.8.2
-      steps:
-         - run:
-            name: env?
-            when: on_fail
-            command: |
-                    echo $XM_URL
-         - xmatters/notify:
-            author: "Jo mama"
-            project: "that one project"
-         - run: echo "Fin"
+    build-and-test:
+      jobs:
+        - build-and-test
