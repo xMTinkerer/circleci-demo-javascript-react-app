@@ -4,11 +4,17 @@ orbs:
 version: 2.1
 
 workflows:
-  matrix-tests:
-    jobs:
-      - node/test:
-          version: 13.11.0
-      - node/test:
-          version: 12.16.0
-      - node/test:
-          version: 10.19.0
+  jobs:
+   build:
+      docker: 
+         - image: circleci/node:4.8.2
+      steps:
+         - run:
+            name: env?
+            when: on_fail
+            command: |
+                    echo $XM_URL
+         - xmatters/notify:
+            author: "Jo mama"
+            project: "that one project"
+         - run: echo "Fin"
